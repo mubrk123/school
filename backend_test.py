@@ -395,9 +395,15 @@ class SchoolAdminAPITester:
         try:
             # Core API tests
             self.test_health_check()
-            self.test_school_registration()
             
-            if self.token:  # Only continue if registration/login successful
+            # Try existing login first
+            self.test_existing_login()
+            
+            # If existing login fails, try registration
+            if not self.token:
+                self.test_school_registration()
+            
+            if self.token:  # Only continue if authentication successful
                 self.test_get_me()
                 self.test_dashboard_stats()
                 self.test_get_classes()
@@ -405,7 +411,7 @@ class SchoolAdminAPITester:
                 self.test_fee_management()
                 self.test_attendance_system()
                 self.test_notifications()
-                self.test_user_management()
+                self.test_teacher_management()
                 
                 # Cleanup
                 self.cleanup_test_data()
