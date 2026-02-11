@@ -954,7 +954,20 @@ async def get_dashboard_stats(user: User = Depends(get_current_user), db: AsyncS
 
 @api_router.get("/classes")
 async def get_classes(user: User = Depends(get_current_user)):
-    """Get list of all classes"""
+    """Get list of all classes - for teachers, only assigned classes"""
+    all_classes = [f"Class {i}" for i in range(1, 13)]
+    
+    if user.role == "teacher" and user.assigned_classes:
+        assigned = user.assigned_classes.split(',')
+        return {"classes": [c for c in all_classes if c in assigned]}
+    
+    return {"classes": all_classes}
+
+@api_router.get("/my-classes")
+async def get_my_classes(user: User = Depends(get_current_user)):
+    """Get current user's assigned classes"""
+    if user.role == "teacher" and user.assigned_classes:
+        return {"classes": user.assigned_classes.split(',')}
     return {"classes": [f"Class {i}" for i in range(1, 13)]}
 
 # Health check
