@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-02-11T10:18:27.083639",
-  "total_tests": 18,
-  "passed_tests": 18,
+  "timestamp": "2026-02-11T10:19:11.261491",
+  "total_tests": 23,
+  "passed_tests": 23,
   "failed_tests": 0,
   "success_rate": 100.0,
   "test_details": [
@@ -23,30 +23,30 @@
       }
     },
     {
-      "test": "School Registration",
+      "test": "Existing User Login",
       "success": true,
       "details": "",
       "response_data": {
-        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiODBmNDc2OTEtNTRiZi00NDVkLThiMmYtZmRmZTc1Y2JjNmIyIiwic2Nob29sX2lkIjoiZDNmOTljMmUtMTY4YS00MzgyLWFmZTQtY2U5M2U5OTMyOGQ5Iiwicm9sZSI6InByaW5jaXBhbCIsImV4cCI6MTc3MDg5MTQ4MX0.qjxd9GAyqeU8_v8Quw1ldoj3444UyGPCB6P2S2UDN90",
+        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYmQwYjFhMjMtY2E3NC00YWI3LThlNTMtNTBiMDk4NDliZGYzIiwic2Nob29sX2lkIjoiYWY0MDUxNmYtNGNiYi00MGU4LWI2ZDMtMzY0NmU4Y2UxODYwIiwicm9sZSI6InByaW5jaXBhbCIsImV4cCI6MTc3MDg5MTUyMX0.doNPVLdVTeBAmb6k1RzHDVlxexEmLld4WcgZm95au60",
         "token_type": "bearer",
         "user": {
-          "id": "80f47691-54bf-445d-8b2f-fdfe75cbc6b2",
-          "school_id": "d3f99c2e-168a-4382-afe4-ce93e99328d9",
-          "email": "principal101754@testschool.com",
-          "name": "Test Principal",
+          "id": "bd0b1a23-ca74-4ab7-8e53-50b09849bdf3",
+          "school_id": "af40516f-4cbb-40e8-b6d3-3646e8ce1860",
+          "email": "admin@demo.com",
+          "name": "Admin",
           "role": "principal",
           "phone": null,
           "address": null,
           "assigned_classes": null,
-          "created_at": "2026-02-11T10:17:59.519938Z"
+          "created_at": "2026-02-11T09:44:42.183597Z"
         },
         "school": {
-          "id": "d3f99c2e-168a-4382-afe4-ce93e99328d9",
-          "name": "Test School 101754",
-          "address": "123 Test Street, Test City",
-          "phone": "+91-9876543210",
-          "email": "contact@testschool.com",
-          "created_at": "2026-02-11T10:17:58.809842Z"
+          "id": "af40516f-4cbb-40e8-b6d3-3646e8ce1860",
+          "name": "Demo School",
+          "address": "456 Main St",
+          "phone": "9876543210",
+          "email": "demo@school.com",
+          "created_at": "2026-02-11T09:44:41.485581Z"
         }
       }
     },
@@ -55,26 +55,26 @@
       "success": true,
       "details": "",
       "response_data": {
-        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiODBmNDc2OTEtNTRiZi00NDVkLThiMmYtZmRmZTc1Y2JjNmIyIiwic2Nob29sX2lkIjoiZDNmOTljMmUtMTY4YS00MzgyLWFmZTQtY2U5M2U5OTMyOGQ5Iiwicm9sZSI6InByaW5jaXBhbCIsImV4cCI6MTc3MDg5MTQ4Mn0.GkHKZN_aexVH4q5K38ys5TOQ4A-F0gFrxzwUL0DLg3Q",
+        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYmQwYjFhMjMtY2E3NC00YWI3LThlNTMtNTBiMDk4NDliZGYzIiwic2Nob29sX2lkIjoiYWY0MDUxNmYtNGNiYi00MGU4LWI2ZDMtMzY0NmU4Y2UxODYwIiwicm9sZSI6InByaW5jaXBhbCIsImV4cCI6MTc3MDg5MTUyMn0.yrSFT1FjFqp8gdX2SsVV64cZ1ilWm_Co_ShUfeiJ2bQ",
         "token_type": "bearer",
         "user": {
-          "id": "80f47691-54bf-445d-8b2f-fdfe75cbc6b2",
-          "school_id": "d3f99c2e-168a-4382-afe4-ce93e99328d9",
-          "email": "principal101754@testschool.com",
-          "name": "Test Principal",
+          "id": "bd0b1a23-ca74-4ab7-8e53-50b09849bdf3",
+          "school_id": "af40516f-4cbb-40e8-b6d3-3646e8ce1860",
+          "email": "admin@demo.com",
+          "name": "Admin",
           "role": "principal",
           "phone": null,
           "address": null,
           "assigned_classes": null,
-          "created_at": "2026-02-11T10:17:59.519938Z"
+          "created_at": "2026-02-11T09:44:42.183597Z"
         },
         "school": {
-          "id": "d3f99c2e-168a-4382-afe4-ce93e99328d9",
-          "name": "Test School 101754",
-          "address": "123 Test Street, Test City",
-          "phone": "+91-9876543210",
-          "email": "contact@testschool.com",
-          "created_at": "2026-02-11T10:17:58.809842Z"
+          "id": "af40516f-4cbb-40e8-b6d3-3646e8ce1860",
+          "name": "Demo School",
+          "address": "456 Main St",
+          "phone": "9876543210",
+          "email": "demo@school.com",
+          "created_at": "2026-02-11T09:44:41.485581Z"
         }
       }
     },
@@ -116,10 +116,10 @@
       "success": true,
       "details": "",
       "response_data": {
-        "id": "d900b3c2-0319-4008-8b64-2287afedf82c",
-        "school_id": "d3f99c2e-168a-4382-afe4-ce93e99328d9",
+        "id": "8b004bc3-b07e-4b47-95ce-2e1a38d3f825",
+        "school_id": "af40516f-4cbb-40e8-b6d3-3646e8ce1860",
         "class_name": "Class 5",
-        "admission_number": "ADM20260211101806",
+        "admission_number": "ADM20260211101845",
         "name": "Test Student",
         "father_name": "Test Father",
         "mother_name": "Test Mother",
@@ -130,7 +130,7 @@
         "parent_email": "parent@test.com",
         "date_of_admission": "2026-02-11",
         "is_active": true,
-        "created_at": "2026-02-11T10:18:07.442936Z"
+        "created_at": "2026-02-11T10:18:45.726871Z"
       }
     },
     {
@@ -139,10 +139,10 @@
       "details": "",
       "response_data": [
         {
-          "id": "d900b3c2-0319-4008-8b64-2287afedf82c",
-          "school_id": "d3f99c2e-168a-4382-afe4-ce93e99328d9",
+          "id": "8b004bc3-b07e-4b47-95ce-2e1a38d3f825",
+          "school_id": "af40516f-4cbb-40e8-b6d3-3646e8ce1860",
           "class_name": "Class 5",
-          "admission_number": "ADM20260211101806",
+          "admission_number": "ADM20260211101845",
           "name": "Test Student",
           "father_name": "Test Father",
           "mother_name": "Test Mother",
@@ -153,7 +153,7 @@
           "parent_email": "parent@test.com",
           "date_of_admission": "2026-02-11",
           "is_active": true,
-          "created_at": "2026-02-11T10:18:07.442936Z"
+          "created_at": "2026-02-11T10:18:45.726871Z"
         }
       ]
     },
@@ -162,10 +162,10 @@
       "success": true,
       "details": "",
       "response_data": {
-        "id": "d900b3c2-0319-4008-8b64-2287afedf82c",
-        "school_id": "d3f99c2e-168a-4382-afe4-ce93e99328d9",
+        "id": "8b004bc3-b07e-4b47-95ce-2e1a38d3f825",
+        "school_id": "af40516f-4cbb-40e8-b6d3-3646e8ce1860",
         "class_name": "Class 5",
-        "admission_number": "ADM20260211101806",
+        "admission_number": "ADM20260211101845",
         "name": "Test Student",
         "father_name": "Test Father",
         "mother_name": "Test Mother",
@@ -176,7 +176,7 @@
         "parent_email": "parent@test.com",
         "date_of_admission": "2026-02-11",
         "is_active": true,
-        "created_at": "2026-02-11T10:18:07.442936Z"
+        "created_at": "2026-02-11T10:18:45.726871Z"
       }
     },
     {
@@ -184,10 +184,10 @@
       "success": true,
       "details": "",
       "response_data": {
-        "id": "d900b3c2-0319-4008-8b64-2287afedf82c",
-        "school_id": "d3f99c2e-168a-4382-afe4-ce93e99328d9",
+        "id": "8b004bc3-b07e-4b47-95ce-2e1a38d3f825",
+        "school_id": "af40516f-4cbb-40e8-b6d3-3646e8ce1860",
         "class_name": "Class 5",
-        "admission_number": "ADM20260211101806",
+        "admission_number": "ADM20260211101845",
         "name": "Updated Test Student",
         "father_name": "Test Father",
         "mother_name": "Test Mother",
@@ -198,7 +198,7 @@
         "parent_email": "parent@test.com",
         "date_of_admission": "2026-02-11",
         "is_active": true,
-        "created_at": "2026-02-11T10:18:07.442936Z"
+        "created_at": "2026-02-11T10:18:45.726871Z"
       }
     },
     {
@@ -206,14 +206,14 @@
       "success": true,
       "details": "",
       "response_data": {
-        "id": "4474c53b-77a5-4d93-8c35-04308dd09690",
-        "school_id": "d3f99c2e-168a-4382-afe4-ce93e99328d9",
+        "id": "066610a7-7ea6-40c9-b666-960f533be81d",
+        "school_id": "af40516f-4cbb-40e8-b6d3-3646e8ce1860",
         "name": "Monthly Fee",
         "amount": 5000.0,
         "description": "Monthly tuition fee",
         "target_class": "Class 5",
         "due_date": "2024-12-31",
-        "created_at": "2026-02-11T10:18:13.775979Z"
+        "created_at": "2026-02-11T10:18:50.938253Z"
       }
     },
     {
@@ -222,14 +222,14 @@
       "details": "",
       "response_data": [
         {
-          "id": "4474c53b-77a5-4d93-8c35-04308dd09690",
-          "school_id": "d3f99c2e-168a-4382-afe4-ce93e99328d9",
+          "id": "066610a7-7ea6-40c9-b666-960f533be81d",
+          "school_id": "af40516f-4cbb-40e8-b6d3-3646e8ce1860",
           "name": "Monthly Fee",
           "amount": 5000.0,
           "description": "Monthly tuition fee",
           "target_class": "Class 5",
           "due_date": "2024-12-31",
-          "created_at": "2026-02-11T10:18:13.775979Z"
+          "created_at": "2026-02-11T10:18:50.938253Z"
         }
       ]
     },
@@ -239,15 +239,15 @@
       "details": "",
       "response_data": [
         {
-          "id": "0d47109b-9859-46fe-a45d-399de235e25c",
-          "student_id": "d900b3c2-0319-4008-8b64-2287afedf82c",
-          "fee_bill_id": "4474c53b-77a5-4d93-8c35-04308dd09690",
+          "id": "9f75504e-24dd-446d-8019-b4cb896a804b",
+          "student_id": "8b004bc3-b07e-4b47-95ce-2e1a38d3f825",
+          "fee_bill_id": "066610a7-7ea6-40c9-b666-960f533be81d",
           "amount": 5000.0,
           "status": "unpaid",
           "paid_at": null,
           "marked_by": null,
           "remarks": null,
-          "created_at": "2026-02-11T10:18:14.653644Z",
+          "created_at": "2026-02-11T10:18:51.374860Z",
           "student_name": "Updated Test Student",
           "student_class": "Class 5",
           "fee_bill_name": "Monthly Fee"
@@ -260,12 +260,12 @@
       "details": "",
       "response_data": [
         {
-          "id": "4cc582f1-4cb0-4cac-bca0-6d4d35ced389",
-          "student_id": "d900b3c2-0319-4008-8b64-2287afedf82c",
+          "id": "d549aa59-6709-4ca9-9045-70df465f5f16",
+          "student_id": "8b004bc3-b07e-4b47-95ce-2e1a38d3f825",
           "date": "2026-02-11",
           "status": "present",
-          "marked_by": "80f47691-54bf-445d-8b2f-fdfe75cbc6b2",
-          "created_at": "2026-02-11T10:18:20.321179Z",
+          "marked_by": "bd0b1a23-ca74-4ab7-8e53-50b09849bdf3",
+          "created_at": "2026-02-11T10:18:55.413722Z",
           "student_name": null,
           "student_class": null
         }
@@ -277,12 +277,12 @@
       "details": "",
       "response_data": [
         {
-          "id": "4cc582f1-4cb0-4cac-bca0-6d4d35ced389",
-          "student_id": "d900b3c2-0319-4008-8b64-2287afedf82c",
+          "id": "d549aa59-6709-4ca9-9045-70df465f5f16",
+          "student_id": "8b004bc3-b07e-4b47-95ce-2e1a38d3f825",
           "date": "2026-02-11",
           "status": "present",
-          "marked_by": "80f47691-54bf-445d-8b2f-fdfe75cbc6b2",
-          "created_at": "2026-02-11T10:18:20.321179Z",
+          "marked_by": "bd0b1a23-ca74-4ab7-8e53-50b09849bdf3",
+          "created_at": "2026-02-11T10:18:55.413722Z",
           "student_name": "Updated Test Student",
           "student_class": "Class 5"
         }
@@ -293,13 +293,13 @@
       "success": true,
       "details": "",
       "response_data": {
-        "id": "0f56b3b6-b1d6-40c3-9d17-229e03782710",
-        "school_id": "d3f99c2e-168a-4382-afe4-ce93e99328d9",
+        "id": "c353898b-bd8e-40f0-9d1a-e51afb02875e",
+        "school_id": "af40516f-4cbb-40e8-b6d3-3646e8ce1860",
         "title": "Test Notification",
         "message": "This is a test notification for parents.",
         "target_class": "Class 5",
-        "created_by": "80f47691-54bf-445d-8b2f-fdfe75cbc6b2",
-        "created_at": "2026-02-11T10:18:23.244762Z"
+        "created_by": "bd0b1a23-ca74-4ab7-8e53-50b09849bdf3",
+        "created_at": "2026-02-11T10:18:57.832267Z"
       }
     },
     {
@@ -308,13 +308,13 @@
       "details": "",
       "response_data": [
         {
-          "id": "0f56b3b6-b1d6-40c3-9d17-229e03782710",
-          "school_id": "d3f99c2e-168a-4382-afe4-ce93e99328d9",
+          "id": "c353898b-bd8e-40f0-9d1a-e51afb02875e",
+          "school_id": "af40516f-4cbb-40e8-b6d3-3646e8ce1860",
           "title": "Test Notification",
           "message": "This is a test notification for parents.",
           "target_class": "Class 5",
-          "created_by": "80f47691-54bf-445d-8b2f-fdfe75cbc6b2",
-          "created_at": "2026-02-11T10:18:23.244762Z"
+          "created_by": "bd0b1a23-ca74-4ab7-8e53-50b09849bdf3",
+          "created_at": "2026-02-11T10:18:57.832267Z"
         }
       ]
     },
@@ -324,21 +324,95 @@
       "details": "",
       "response_data": {
         "notification": {
-          "id": "0f56b3b6-b1d6-40c3-9d17-229e03782710",
-          "school_id": "d3f99c2e-168a-4382-afe4-ce93e99328d9",
+          "id": "c353898b-bd8e-40f0-9d1a-e51afb02875e",
+          "school_id": "af40516f-4cbb-40e8-b6d3-3646e8ce1860",
           "title": "Test Notification",
           "message": "This is a test notification for parents.",
           "target_class": "Class 5",
-          "created_by": "80f47691-54bf-445d-8b2f-fdfe75cbc6b2",
-          "created_at": "2026-02-11T10:18:23.244762Z"
+          "created_by": "bd0b1a23-ca74-4ab7-8e53-50b09849bdf3",
+          "created_at": "2026-02-11T10:18:57.832267Z"
         },
         "contacts": [
           {
             "student_name": "Updated Test Student",
             "parent_contact": "+91-9876543210",
-            "whatsapp_link": "https://wa.me/919876543210?text=*Test Notification*\n\nThis is a test notification for parents.\n\n- d3f99c2e-168a-4382-afe4-ce93e99328d9"
+            "whatsapp_link": "https://wa.me/919876543210?text=*Test Notification*\n\nThis is a test notification for parents.\n\n- af40516f-4cbb-40e8-b6d3-3646e8ce1860"
           }
         ]
+      }
+    },
+    {
+      "test": "Create Teacher with Classes",
+      "success": true,
+      "details": "",
+      "response_data": {
+        "id": "53060be1-bf4b-4731-9f5c-35653d070421",
+        "school_id": "af40516f-4cbb-40e8-b6d3-3646e8ce1860",
+        "email": "teacher101900@testschool.com",
+        "name": "Test Teacher",
+        "role": "teacher",
+        "phone": "+91-9876543210",
+        "address": "123 Teacher Street",
+        "assigned_classes": "Class 5,Class 6",
+        "created_at": "2026-02-11T10:19:01.870147Z"
+      }
+    },
+    {
+      "test": "Get Teachers",
+      "success": true,
+      "details": "",
+      "response_data": [
+        {
+          "id": "53060be1-bf4b-4731-9f5c-35653d070421",
+          "school_id": "af40516f-4cbb-40e8-b6d3-3646e8ce1860",
+          "email": "teacher101900@testschool.com",
+          "name": "Test Teacher",
+          "role": "teacher",
+          "phone": "+91-9876543210",
+          "address": "123 Teacher Street",
+          "assigned_classes": "Class 5,Class 6",
+          "created_at": "2026-02-11T10:19:01.870147Z"
+        }
+      ]
+    },
+    {
+      "test": "Record Teacher Salary",
+      "success": true,
+      "details": "",
+      "response_data": {
+        "id": "cce45326-18ae-4019-95c0-bec434657a9f",
+        "teacher_id": "53060be1-bf4b-4731-9f5c-35653d070421",
+        "amount": 50000.0,
+        "remark": "January 2025 Salary",
+        "paid_by": "bd0b1a23-ca74-4ab7-8e53-50b09849bdf3",
+        "paid_at": "2026-02-11T10:19:05.031578Z",
+        "created_at": "2026-02-11T10:19:05.032548Z",
+        "teacher_name": "Test Teacher"
+      }
+    },
+    {
+      "test": "Get Teacher Salary History",
+      "success": true,
+      "details": "",
+      "response_data": [
+        {
+          "id": "cce45326-18ae-4019-95c0-bec434657a9f",
+          "teacher_id": "53060be1-bf4b-4731-9f5c-35653d070421",
+          "amount": 50000.0,
+          "remark": "January 2025 Salary",
+          "paid_by": "bd0b1a23-ca74-4ab7-8e53-50b09849bdf3",
+          "paid_at": "2026-02-11T10:19:05.031578Z",
+          "created_at": "2026-02-11T10:19:05.032548Z",
+          "teacher_name": "Test Teacher"
+        }
+      ]
+    },
+    {
+      "test": "Delete Test Student",
+      "success": true,
+      "details": "",
+      "response_data": {
+        "message": "Student deleted"
       }
     }
   ]
