@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-02-11T09:36:17.025382",
-  "total_tests": 21,
-  "passed_tests": 21,
-  "failed_tests": 0,
-  "success_rate": 100.0,
+  "timestamp": "2026-02-11T09:45:36.372930",
+  "total_tests": 3,
+  "passed_tests": 2,
+  "failed_tests": 1,
+  "success_rate": 66.66666666666666,
   "test_details": [
     {
       "test": "API Root Health Check",
@@ -24,359 +24,103 @@
     },
     {
       "test": "School Registration",
-      "success": true,
-      "details": "",
+      "success": false,
+      "details": "Status: 422, Data: {'detail': [{'type': 'missing', 'loc': ['body', 'school_name'], 'msg': 'Field required', 'input': {'school_data': {'name': 'Test School 094536', 'address': '123 Test Street, Test City', 'phone': '+91-9876543210', 'email': 'contact@testschool.com'}, 'user_data': {'name': 'Test Principal', 'email': 'principal094536@testschool.com', 'password': 'TestPass123!', 'role': 'principal'}}, 'url': 'https://errors.pydantic.dev/2.12/v/missing'}, {'type': 'missing', 'loc': ['body', 'user_name'], 'msg': 'Field required', 'input': {'school_data': {'name': 'Test School 094536', 'address': '123 Test Street, Test City', 'phone': '+91-9876543210', 'email': 'contact@testschool.com'}, 'user_data': {'name': 'Test Principal', 'email': 'principal094536@testschool.com', 'password': 'TestPass123!', 'role': 'principal'}}, 'url': 'https://errors.pydantic.dev/2.12/v/missing'}, {'type': 'missing', 'loc': ['body', 'user_email'], 'msg': 'Field required', 'input': {'school_data': {'name': 'Test School 094536', 'address': '123 Test Street, Test City', 'phone': '+91-9876543210', 'email': 'contact@testschool.com'}, 'user_data': {'name': 'Test Principal', 'email': 'principal094536@testschool.com', 'password': 'TestPass123!', 'role': 'principal'}}, 'url': 'https://errors.pydantic.dev/2.12/v/missing'}, {'type': 'missing', 'loc': ['body', 'user_password'], 'msg': 'Field required', 'input': {'school_data': {'name': 'Test School 094536', 'address': '123 Test Street, Test City', 'phone': '+91-9876543210', 'email': 'contact@testschool.com'}, 'user_data': {'name': 'Test Principal', 'email': 'principal094536@testschool.com', 'password': 'TestPass123!', 'role': 'principal'}}, 'url': 'https://errors.pydantic.dev/2.12/v/missing'}]}",
       "response_data": {
-        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZWU3OTBmZjQtMTI1NC00ZGJmLWFiMjctMTUxOWE0NGRiZjBjIiwic2Nob29sX2lkIjoiYmU2ODI5MGMtYmE1Zi00NmViLWIyZWItNTlmOWY3ZjJhZGNhIiwicm9sZSI6InByaW5jaXBhbCIsImV4cCI6MTc3MDg4ODk0NX0.oUNIndCuHM9Y4wC_oDs3OECGtWOJ4R61NJj5eaUxaQE",
-        "token_type": "bearer",
-        "user": {
-          "id": "ee790ff4-1254-4dbf-ab27-1519a44dbf0c",
-          "school_id": "be68290c-ba5f-46eb-b2eb-59f9f7f2adca",
-          "email": "principal093543@testschool.com",
-          "name": "Test Principal",
-          "role": "principal",
-          "created_at": "2026-02-11T09:35:44.677934Z"
-        },
-        "school": {
-          "id": "be68290c-ba5f-46eb-b2eb-59f9f7f2adca",
-          "name": "Test School 093543",
-          "address": "123 Test Street, Test City",
-          "phone": "+91-9876543210",
-          "email": "contact@testschool.com",
-          "created_at": "2026-02-11T09:35:44.012967Z"
-        }
-      }
-    },
-    {
-      "test": "Get Current User",
-      "success": true,
-      "details": "",
-      "response_data": {
-        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZWU3OTBmZjQtMTI1NC00ZGJmLWFiMjctMTUxOWE0NGRiZjBjIiwic2Nob29sX2lkIjoiYmU2ODI5MGMtYmE1Zi00NmViLWIyZWItNTlmOWY3ZjJhZGNhIiwicm9sZSI6InByaW5jaXBhbCIsImV4cCI6MTc3MDg4ODk0Nn0.rtcmTpb6l7cNH1Y27XRm5AOc5K5scAwWo6eWDxhCAto",
-        "token_type": "bearer",
-        "user": {
-          "id": "ee790ff4-1254-4dbf-ab27-1519a44dbf0c",
-          "school_id": "be68290c-ba5f-46eb-b2eb-59f9f7f2adca",
-          "email": "principal093543@testschool.com",
-          "name": "Test Principal",
-          "role": "principal",
-          "created_at": "2026-02-11T09:35:44.677934Z"
-        },
-        "school": {
-          "id": "be68290c-ba5f-46eb-b2eb-59f9f7f2adca",
-          "name": "Test School 093543",
-          "address": "123 Test Street, Test City",
-          "phone": "+91-9876543210",
-          "email": "contact@testschool.com",
-          "created_at": "2026-02-11T09:35:44.012967Z"
-        }
-      }
-    },
-    {
-      "test": "Dashboard Stats",
-      "success": true,
-      "details": "",
-      "response_data": {
-        "total_students": 0,
-        "total_classes": 0,
-        "pending_fees": 0,
-        "today_attendance_rate": 0.0,
-        "recent_admissions": 0
-      }
-    },
-    {
-      "test": "Get Classes",
-      "success": true,
-      "details": "",
-      "response_data": {
-        "classes": [
-          "Class 1",
-          "Class 2",
-          "Class 3",
-          "Class 4",
-          "Class 5",
-          "Class 6",
-          "Class 7",
-          "Class 8",
-          "Class 9",
-          "Class 10",
-          "Class 11",
-          "Class 12"
-        ]
-      }
-    },
-    {
-      "test": "Create Student",
-      "success": true,
-      "details": "",
-      "response_data": {
-        "id": "f741e374-a452-41f2-858b-9bcc74fbaf10",
-        "school_id": "be68290c-ba5f-46eb-b2eb-59f9f7f2adca",
-        "class_name": "Class 5",
-        "admission_number": "ADM20260211093551",
-        "name": "Test Student",
-        "father_name": "Test Father",
-        "mother_name": "Test Mother",
-        "date_of_birth": "2010-01-15",
-        "gender": "male",
-        "address": "123 Student Street",
-        "parent_contact": "+91-9876543210",
-        "parent_email": "parent@test.com",
-        "date_of_admission": "2026-02-11",
-        "is_active": true,
-        "created_at": "2026-02-11T09:35:51.504017Z"
-      }
-    },
-    {
-      "test": "Get Students",
-      "success": true,
-      "details": "",
-      "response_data": [
-        {
-          "id": "f741e374-a452-41f2-858b-9bcc74fbaf10",
-          "school_id": "be68290c-ba5f-46eb-b2eb-59f9f7f2adca",
-          "class_name": "Class 5",
-          "admission_number": "ADM20260211093551",
-          "name": "Test Student",
-          "father_name": "Test Father",
-          "mother_name": "Test Mother",
-          "date_of_birth": "2010-01-15",
-          "gender": "male",
-          "address": "123 Student Street",
-          "parent_contact": "+91-9876543210",
-          "parent_email": "parent@test.com",
-          "date_of_admission": "2026-02-11",
-          "is_active": true,
-          "created_at": "2026-02-11T09:35:51.504017Z"
-        }
-      ]
-    },
-    {
-      "test": "Get Single Student",
-      "success": true,
-      "details": "",
-      "response_data": {
-        "id": "f741e374-a452-41f2-858b-9bcc74fbaf10",
-        "school_id": "be68290c-ba5f-46eb-b2eb-59f9f7f2adca",
-        "class_name": "Class 5",
-        "admission_number": "ADM20260211093551",
-        "name": "Test Student",
-        "father_name": "Test Father",
-        "mother_name": "Test Mother",
-        "date_of_birth": "2010-01-15",
-        "gender": "male",
-        "address": "123 Student Street",
-        "parent_contact": "+91-9876543210",
-        "parent_email": "parent@test.com",
-        "date_of_admission": "2026-02-11",
-        "is_active": true,
-        "created_at": "2026-02-11T09:35:51.504017Z"
-      }
-    },
-    {
-      "test": "Update Student",
-      "success": true,
-      "details": "",
-      "response_data": {
-        "id": "f741e374-a452-41f2-858b-9bcc74fbaf10",
-        "school_id": "be68290c-ba5f-46eb-b2eb-59f9f7f2adca",
-        "class_name": "Class 5",
-        "admission_number": "ADM20260211093551",
-        "name": "Updated Test Student",
-        "father_name": "Test Father",
-        "mother_name": "Test Mother",
-        "date_of_birth": "2010-01-15",
-        "gender": "male",
-        "address": "123 Student Street",
-        "parent_contact": "+91-9876543210",
-        "parent_email": "parent@test.com",
-        "date_of_admission": "2026-02-11",
-        "is_active": true,
-        "created_at": "2026-02-11T09:35:51.504017Z"
-      }
-    },
-    {
-      "test": "Create Fee Bill",
-      "success": true,
-      "details": "",
-      "response_data": {
-        "id": "e8f8228d-22db-4ef1-aad1-50b05171000b",
-        "school_id": "be68290c-ba5f-46eb-b2eb-59f9f7f2adca",
-        "name": "Monthly Fee",
-        "amount": 5000.0,
-        "description": "Monthly tuition fee",
-        "target_class": "Class 5",
-        "due_date": "2024-12-31",
-        "created_at": "2026-02-11T09:35:57.856967Z"
-      }
-    },
-    {
-      "test": "Get Fee Bills",
-      "success": true,
-      "details": "",
-      "response_data": [
-        {
-          "id": "e8f8228d-22db-4ef1-aad1-50b05171000b",
-          "school_id": "be68290c-ba5f-46eb-b2eb-59f9f7f2adca",
-          "name": "Monthly Fee",
-          "amount": 5000.0,
-          "description": "Monthly tuition fee",
-          "target_class": "Class 5",
-          "due_date": "2024-12-31",
-          "created_at": "2026-02-11T09:35:57.856967Z"
-        }
-      ]
-    },
-    {
-      "test": "Get Fee Bill Students",
-      "success": true,
-      "details": "",
-      "response_data": [
-        {
-          "id": "46973e1a-3b8d-41d9-8bcd-c916592f3737",
-          "student_id": "f741e374-a452-41f2-858b-9bcc74fbaf10",
-          "fee_bill_id": "e8f8228d-22db-4ef1-aad1-50b05171000b",
-          "amount": 5000.0,
-          "status": "unpaid",
-          "paid_at": null,
-          "marked_by": null,
-          "remarks": null,
-          "created_at": "2026-02-11T09:35:58.727534Z",
-          "student_name": "Updated Test Student",
-          "student_class": "Class 5",
-          "fee_bill_name": "Monthly Fee"
-        }
-      ]
-    },
-    {
-      "test": "Mark Attendance",
-      "success": true,
-      "details": "",
-      "response_data": [
-        {
-          "id": "6467d54e-d78f-4b20-88d8-ba85e110c960",
-          "student_id": "f741e374-a452-41f2-858b-9bcc74fbaf10",
-          "date": "2026-02-11",
-          "status": "present",
-          "marked_by": "ee790ff4-1254-4dbf-ab27-1519a44dbf0c",
-          "created_at": "2026-02-11T09:36:04.292929Z",
-          "student_name": null,
-          "student_class": null
-        }
-      ]
-    },
-    {
-      "test": "Get Attendance",
-      "success": true,
-      "details": "",
-      "response_data": [
-        {
-          "id": "6467d54e-d78f-4b20-88d8-ba85e110c960",
-          "student_id": "f741e374-a452-41f2-858b-9bcc74fbaf10",
-          "date": "2026-02-11",
-          "status": "present",
-          "marked_by": "ee790ff4-1254-4dbf-ab27-1519a44dbf0c",
-          "created_at": "2026-02-11T09:36:04.292929Z",
-          "student_name": "Updated Test Student",
-          "student_class": "Class 5"
-        }
-      ]
-    },
-    {
-      "test": "Create Notification",
-      "success": true,
-      "details": "",
-      "response_data": {
-        "id": "4c628d16-7499-4ba0-89df-e4d6b11a608b",
-        "school_id": "be68290c-ba5f-46eb-b2eb-59f9f7f2adca",
-        "title": "Test Notification",
-        "message": "This is a test notification for parents.",
-        "target_class": "Class 5",
-        "created_by": "ee790ff4-1254-4dbf-ab27-1519a44dbf0c",
-        "created_at": "2026-02-11T09:36:07.221121Z"
-      }
-    },
-    {
-      "test": "Get Notifications",
-      "success": true,
-      "details": "",
-      "response_data": [
-        {
-          "id": "4c628d16-7499-4ba0-89df-e4d6b11a608b",
-          "school_id": "be68290c-ba5f-46eb-b2eb-59f9f7f2adca",
-          "title": "Test Notification",
-          "message": "This is a test notification for parents.",
-          "target_class": "Class 5",
-          "created_by": "ee790ff4-1254-4dbf-ab27-1519a44dbf0c",
-          "created_at": "2026-02-11T09:36:07.221121Z"
-        }
-      ]
-    },
-    {
-      "test": "Get Notification Contacts",
-      "success": true,
-      "details": "",
-      "response_data": {
-        "notification": {
-          "id": "4c628d16-7499-4ba0-89df-e4d6b11a608b",
-          "school_id": "be68290c-ba5f-46eb-b2eb-59f9f7f2adca",
-          "title": "Test Notification",
-          "message": "This is a test notification for parents.",
-          "target_class": "Class 5",
-          "created_by": "ee790ff4-1254-4dbf-ab27-1519a44dbf0c",
-          "created_at": "2026-02-11T09:36:07.221121Z"
-        },
-        "contacts": [
+        "detail": [
           {
-            "student_name": "Updated Test Student",
-            "parent_contact": "+91-9876543210",
-            "whatsapp_link": "https://wa.me/919876543210?text=*Test Notification*\n\nThis is a test notification for parents.\n\n- be68290c-ba5f-46eb-b2eb-59f9f7f2adca"
+            "type": "missing",
+            "loc": [
+              "body",
+              "school_name"
+            ],
+            "msg": "Field required",
+            "input": {
+              "school_data": {
+                "name": "Test School 094536",
+                "address": "123 Test Street, Test City",
+                "phone": "+91-9876543210",
+                "email": "contact@testschool.com"
+              },
+              "user_data": {
+                "name": "Test Principal",
+                "email": "principal094536@testschool.com",
+                "password": "TestPass123!",
+                "role": "principal"
+              }
+            },
+            "url": "https://errors.pydantic.dev/2.12/v/missing"
+          },
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "user_name"
+            ],
+            "msg": "Field required",
+            "input": {
+              "school_data": {
+                "name": "Test School 094536",
+                "address": "123 Test Street, Test City",
+                "phone": "+91-9876543210",
+                "email": "contact@testschool.com"
+              },
+              "user_data": {
+                "name": "Test Principal",
+                "email": "principal094536@testschool.com",
+                "password": "TestPass123!",
+                "role": "principal"
+              }
+            },
+            "url": "https://errors.pydantic.dev/2.12/v/missing"
+          },
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "user_email"
+            ],
+            "msg": "Field required",
+            "input": {
+              "school_data": {
+                "name": "Test School 094536",
+                "address": "123 Test Street, Test City",
+                "phone": "+91-9876543210",
+                "email": "contact@testschool.com"
+              },
+              "user_data": {
+                "name": "Test Principal",
+                "email": "principal094536@testschool.com",
+                "password": "TestPass123!",
+                "role": "principal"
+              }
+            },
+            "url": "https://errors.pydantic.dev/2.12/v/missing"
+          },
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "user_password"
+            ],
+            "msg": "Field required",
+            "input": {
+              "school_data": {
+                "name": "Test School 094536",
+                "address": "123 Test Street, Test City",
+                "phone": "+91-9876543210",
+                "email": "contact@testschool.com"
+              },
+              "user_data": {
+                "name": "Test Principal",
+                "email": "principal094536@testschool.com",
+                "password": "TestPass123!",
+                "role": "principal"
+              }
+            },
+            "url": "https://errors.pydantic.dev/2.12/v/missing"
           }
         ]
-      }
-    },
-    {
-      "test": "Create Teacher User",
-      "success": true,
-      "details": "",
-      "response_data": {
-        "id": "7e3322bc-95d0-4ff3-a83c-f6cd78648594",
-        "school_id": "be68290c-ba5f-46eb-b2eb-59f9f7f2adca",
-        "email": "teacher093610@testschool.com",
-        "name": "Test Teacher",
-        "role": "teacher",
-        "created_at": "2026-02-11T09:36:11.698072Z"
-      }
-    },
-    {
-      "test": "Get Users",
-      "success": true,
-      "details": "",
-      "response_data": [
-        {
-          "id": "ee790ff4-1254-4dbf-ab27-1519a44dbf0c",
-          "school_id": "be68290c-ba5f-46eb-b2eb-59f9f7f2adca",
-          "email": "principal093543@testschool.com",
-          "name": "Test Principal",
-          "role": "principal",
-          "created_at": "2026-02-11T09:35:44.677934Z"
-        },
-        {
-          "id": "7e3322bc-95d0-4ff3-a83c-f6cd78648594",
-          "school_id": "be68290c-ba5f-46eb-b2eb-59f9f7f2adca",
-          "email": "teacher093610@testschool.com",
-          "name": "Test Teacher",
-          "role": "teacher",
-          "created_at": "2026-02-11T09:36:11.698072Z"
-        }
-      ]
-    },
-    {
-      "test": "Delete Test Student",
-      "success": true,
-      "details": "",
-      "response_data": {
-        "message": "Student deleted"
       }
     }
   ]
