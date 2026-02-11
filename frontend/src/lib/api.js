@@ -103,5 +103,6 @@ export const getDashboardStats = () => api.get('/dashboard/stats');
 
 // Classes
 export const getClasses = () => api.get('/classes');
+export const getMyClasses = () => api.get('/my-classes');
 
 export default api;
