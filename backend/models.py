@@ -34,9 +34,13 @@ class User(Base):
     password_hash = Column(String(255), nullable=False)
     name = Column(String(255), nullable=False)
     role = Column(String(20), nullable=False, default='teacher')  # principal, teacher
+    phone = Column(String(20))
+    address = Column(Text)
+    assigned_classes = Column(Text)  # Comma-separated class names for teachers
     created_at = Column(DateTime(timezone=True), default=utc_now)
     
     school = relationship('School', back_populates='users')
+    salary_payments = relationship('TeacherSalary', back_populates='teacher', cascade='all, delete-orphan', foreign_keys='TeacherSalary.teacher_id')
     
     __table_args__ = (
         Index('idx_user_school_email', 'school_id', 'email', unique=True),
