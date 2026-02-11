@@ -12,6 +12,7 @@ import { AdmissionPage } from "./pages/AdmissionPage";
 import { AttendancePage } from "./pages/AttendancePage";
 import { FeesPage } from "./pages/FeesPage";
 import { NotificationsPage } from "./pages/NotificationsPage";
+import { TeachersPage } from "./pages/TeachersPage";
 
 const ProtectedRoute = ({ children, requirePrincipal = false }) => {
   const { isAuthenticated, loading, isPrincipal } = useAuth();
