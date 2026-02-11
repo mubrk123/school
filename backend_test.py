@@ -90,18 +90,13 @@ class SchoolAdminAPITester:
         print("\n🔍 Testing School Registration...")
         
         registration_data = {
-            "school_data": {
-                "name": self.test_school_name,
-                "address": "123 Test Street, Test City",
-                "phone": "+91-9876543210",
-                "email": "contact@testschool.com"
-            },
-            "user_data": {
-                "name": "Test Principal",
-                "email": self.test_user_email,
-                "password": self.test_user_password,
-                "role": "principal"
-            }
+            "school_name": self.test_school_name,
+            "school_address": "123 Test Street, Test City",
+            "school_phone": "+91-9876543210",
+            "school_email": "contact@testschool.com",
+            "user_name": "Test Principal",
+            "user_email": self.test_user_email,
+            "user_password": self.test_user_password
         }
         
         status_code, data = self.make_request('POST', '/auth/register-school', registration_data)
