@@ -366,17 +366,158 @@ async def get_me(user: User = Depends(get_current_user), db: AsyncSession = Depe
 @api_router.post("/users", response_model=UserResponse)
 async def create_user(data: UserCreate, user: User = Depends(require_principal), db: AsyncSession = Depends(get_db)):
     """Create a new user (teacher) - Principal only"""
+    # Check if email exists
+    result = await db.execute(select(User).where(User.email == data.email))
+    if result.scalar_one_or_none():
+        raise HTTPException(status_code=400, detail="Email already exists")
+    
+    assigned_classes_str = ','.join(data.assigned_classes) if data.assigned_classes else None
+    
     new_user = User(
         school_id=user.school_id,
         email=data.email,
         password_hash=hash_password(data.password),
         name=data.name,
+        phone=data.phone,
+        address=data.address,
+        assigned_classes=assigned_classes_str,
         role=data.role if data.role in ["teacher", "principal"] else "teacher"
     )
     db.add(new_user)
     await db.commit()
     await db.refresh(new_user)
     return UserResponse.model_validate(new_user)
+
+@api_router.post("/teachers", response_model=UserResponse)
+async def create_teacher(data: TeacherCreate, user: User = Depends(require_principal), db: AsyncSession = Depends(get_db)):
+    """Create a new teacher with assigned classes - Principal only"""
+    # Check if email exists
+    result = await db.execute(select(User).where(User.email == data.email))
+    if result.scalar_one_or_none():
+        raise HTTPException(status_code=400, detail="Email already exists")
+    
+    assigned_classes_str = ','.join(data.assigned_classes) if data.assigned_classes else None
+    
+    new_teacher = User(
+        school_id=user.school_id,
+        email=data.email,
+        password_hash=hash_password(data.password),
+        name=data.name,
+        phone=data.phone,
+        address=data.address,
+        assigned_classes=assigned_classes_str,
+        role="teacher"
+    )
+    db.add(new_teacher)
+    await db.commit()
+    await db.refresh(new_teacher)
+    return UserResponse.model_validate(new_teacher)
+
+@api_router.get("/teachers", response_model=List[UserResponse])
+async def get_teachers(user: User = Depends(require_principal), db: AsyncSession = Depends(get_db)):
+    """Get all teachers in the school - Principal only"""
+    result = await db.execute(
+        select(User).where(and_(User.school_id == user.school_id, User.role == "teacher"))
+    )
+    teachers = result.scalars().all()
+    return [UserResponse.model_validate(t) for t in teachers]
+
+@api_router.get("/teachers/{teacher_id}", response_model=UserResponse)
+async def get_teacher(teacher_id: str, user: User = Depends(require_principal), db: AsyncSession = Depends(get_db)):
+    """Get a specific teacher - Principal only"""
+    result = await db.execute(
+        select(User).where(and_(User.id == teacher_id, User.school_id == user.school_id, User.role == "teacher"))
+    )
+    teacher = result.scalar_one_or_none()
+    if not teacher:
+        raise HTTPException(status_code=404, detail="Teacher not found")
+    return UserResponse.model_validate(teacher)
+
+@api_router.put("/teachers/{teacher_id}", response_model=UserResponse)
+async def update_teacher(teacher_id: str, data: TeacherCreate, user: User = Depends(require_principal), db: AsyncSession = Depends(get_db)):
+    """Update a teacher - Principal only"""
+    result = await db.execute(
+        select(User).where(and_(User.id == teacher_id, User.school_id == user.school_id, User.role == "teacher"))
+    )
+    teacher = result.scalar_one_or_none()
+    if not teacher:
+        raise HTTPException(status_code=404, detail="Teacher not found")
+    
+    teacher.name = data.name
+    teacher.phone = data.phone
+    teacher.address = data.address
+    teacher.assigned_classes = ','.join(data.assigned_classes) if data.assigned_classes else None
+    if data.password:
+        teacher.password_hash = hash_password(data.password)
+    
+    await db.commit()
+    await db.refresh(teacher)
+    return UserResponse.model_validate(teacher)
+
+# ========================
+# Teacher Salary Routes
+# ========================
+
+@api_router.post("/teacher-salaries", response_model=TeacherSalaryResponse)
+async def create_teacher_salary(data: TeacherSalaryCreate, user: User = Depends(require_principal), db: AsyncSession = Depends(get_db)):
+    """Record a salary payment to a teacher - Principal only"""
+    # Verify teacher exists in same school
+    result = await db.execute(
+        select(User).where(and_(User.id == data.teacher_id, User.school_id == user.school_id, User.role == "teacher"))
+    )
+    teacher = result.scalar_one_or_none()
+    if not teacher:
+        raise HTTPException(status_code=404, detail="Teacher not found")
+    
+    salary = TeacherSalary(
+        teacher_id=data.teacher_id,
+        amount=data.amount,
+        remark=data.remark,
+        paid_by=user.id,
+        paid_at=datetime.now(timezone.utc)
+    )
+    db.add(salary)
+    await db.commit()
+    await db.refresh(salary)
+    
+    response = TeacherSalaryResponse.model_validate(salary)
+    response.teacher_name = teacher.name
+    return response
+
+@api_router.get("/teacher-salaries", response_model=List[TeacherSalaryResponse])
+async def get_all_salaries(user: User = Depends(require_principal), db: AsyncSession = Depends(get_db)):
+    """Get all salary payments - Principal only"""
+    result = await db.execute(
+        select(TeacherSalary).options(selectinload(TeacherSalary.teacher)).join(User).where(
+            User.school_id == user.school_id
+        ).order_by(TeacherSalary.paid_at.desc())
+    )
+    salaries = result.scalars().all()
+    
+    response = []
+    for salary in salaries:
+        s = TeacherSalaryResponse.model_validate(salary)
+        s.teacher_name = salary.teacher.name if salary.teacher else None
+        response.append(s)
+    return response
+
+@api_router.get("/teachers/{teacher_id}/salaries", response_model=List[TeacherSalaryResponse])
+async def get_teacher_salaries(teacher_id: str, user: User = Depends(require_principal), db: AsyncSession = Depends(get_db)):
+    """Get salary history for a specific teacher - Principal only"""
+    result = await db.execute(
+        select(TeacherSalary).options(selectinload(TeacherSalary.teacher)).where(
+            TeacherSalary.teacher_id == teacher_id
+        ).order_by(TeacherSalary.paid_at.desc())
+    )
+    salaries = result.scalars().all()
+    
+    response = []
+    for salary in salaries:
+        s = TeacherSalaryResponse.model_validate(salary)
+        s.teacher_name = salary.teacher.name if salary.teacher else None
+        response.append(s)
+    return response
+
 
 @api_router.get("/users", response_model=List[UserResponse])
 async def get_users(user: User = Depends(require_principal), db: AsyncSession = Depends(get_db)):
