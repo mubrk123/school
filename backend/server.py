@@ -49,6 +49,15 @@ class SchoolCreate(BaseModel):
     phone: Optional[str] = None
     email: Optional[str] = None
 
+class SchoolRegisterRequest(BaseModel):
+    school_name: str
+    school_address: Optional[str] = None
+    school_phone: Optional[str] = None
+    school_email: Optional[str] = None
+    user_name: str
+    user_email: EmailStr
+    user_password: str
+
 class SchoolResponse(BaseModel):
     id: str
     name: str
