@@ -128,6 +128,26 @@ class SchoolAdminAPITester:
         self.log_result("User Login", success, 
                        f"Status: {status_code}" if not success else "", data)
 
+    def test_existing_login(self):
+        """Test login with existing credentials"""
+        print("\n🔍 Testing Existing User Login...")
+        
+        login_data = {
+            "email": "admin@demo.com",
+            "password": "test1234"
+        }
+        
+        status_code, data = self.make_request('POST', '/auth/login', login_data)
+        
+        success = status_code == 200 and 'access_token' in data
+        if success:
+            self.token = data['access_token']
+            self.school_id = data['school']['id']
+            self.user_id = data['user']['id']
+        
+        self.log_result("Existing User Login", success, 
+                       f"Status: {status_code}" if not success else "", data)
+
     def test_get_me(self):
         """Test get current user info"""
         print("\n🔍 Testing Get Current User...")
