@@ -12,7 +12,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../components/ui/table';
 import { Badge } from '../components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
-import { Plus, CreditCard, Users, CheckCircle, Loader2, Eye, IndianRupee } from 'lucide-react';
+import { Plus, CreditCard, CheckCircle, Loader2, ArrowLeft, IndianRupee, Filter, Users } from 'lucide-react';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 
@@ -22,13 +22,13 @@ export const FeesPage = () => {
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
-  const [viewDialogOpen, setViewDialogOpen] = useState(false);
-  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [selectedBill, setSelectedBill] = useState(null);
   const [billStudents, setBillStudents] = useState([]);
+  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [selectedFee, setSelectedFee] = useState(null);
   const [loadingStudents, setLoadingStudents] = useState(false);
   const [markingPaid, setMarkingPaid] = useState(false);
+  const [classFilter, setClassFilter] = useState('all');
 
   const [newBill, setNewBill] = useState({
     name: '',
@@ -81,7 +81,7 @@ export const FeesPage = () => {
 
   const handleViewBill = async (bill) => {
     setSelectedBill(bill);
-    setViewDialogOpen(true);
+    setClassFilter('all');
     setLoadingStudents(true);
     
     try {
@@ -133,6 +133,22 @@ export const FeesPage = () => {
     'Other'
   ];
 
+  // Filter students by class
+  const filteredStudents = billStudents.filter(s => {
+    if (classFilter === 'all') return true;
+    return s.student_class === classFilter;
+  });
+
+  const unpaidStudents = filteredStudents.filter(s => s.status === 'unpaid');
+  const paidStudents = filteredStudents.filter(s => s.status === 'paid');
+
+  // Get unique classes from students
+  const studentClasses = [...new Set(billStudents.map(s => s.student_class))].sort((a, b) => {
+    const numA = parseInt(a?.replace('Class ', '') || '0');
+    const numB = parseInt(b?.replace('Class ', '') || '0');
+    return numA - numB;
+  });
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -141,6 +157,225 @@ export const FeesPage = () => {
     );
   }
 
+  // Detail View
+  if (selectedBill) {
+    return (
+      <div className="space-y-6 fade-in" data-testid="fee-detail-page">
+        {/* Header */}
+        <div className="flex items-center gap-4">
+          <Button 
+            variant="ghost" 
+            size="sm"
+            onClick={() => {
+              setSelectedBill(null);
+              setBillStudents([]);
+            }}
+            className="text-slate-600"
+            data-testid="back-to-fees-btn"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Fees
+          </Button>
+        </div>
+
+        {/* Fee Info */}
+        <Card className="border-slate-200">
+          <CardContent className="p-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <h1 className="text-2xl font-bold text-slate-900">{selectedBill.name}</h1>
+                <p className="text-slate-500 mt-1">{selectedBill.description || 'No description'}</p>
+              </div>
+              <div className="flex items-center gap-4">
+                <Badge variant="secondary" className="bg-blue-100 text-blue-700 text-lg px-4 py-2">
+                  ₹{selectedBill.amount.toLocaleString()}
+                </Badge>
+                <Badge variant="secondary" className="bg-slate-100 text-slate-700">
+                  {selectedBill.target_class || 'All Classes'}
+                </Badge>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Filter */}
+        <Card className="border-slate-200">
+          <CardContent className="p-4">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+              <div className="flex items-center gap-2">
+                <Filter className="w-4 h-4 text-slate-500" />
+                <span className="text-sm font-medium text-slate-700">Filter by Class:</span>
+              </div>
+              <Select value={classFilter} onValueChange={setClassFilter}>
+                <SelectTrigger className="w-full sm:w-48 bg-white border-slate-200" data-testid="fee-class-filter">
+                  <SelectValue placeholder="All Classes" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Classes</SelectItem>
+                  {studentClasses.map((cls) => (
+                    <SelectItem key={cls} value={cls}>{cls}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <div className="flex gap-2 ml-auto">
+                <Badge variant="secondary" className="bg-red-100 text-red-700">
+                  Unpaid: {unpaidStudents.length}
+                </Badge>
+                <Badge variant="secondary" className="bg-green-100 text-green-700">
+                  Paid: {paidStudents.length}
+                </Badge>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Students List */}
+        {loadingStudents ? (
+          <div className="flex items-center justify-center h-48">
+            <div className="spinner" />
+          </div>
+        ) : (
+          <Tabs defaultValue="unpaid" className="w-full">
+            <TabsList className="bg-slate-100">
+              <TabsTrigger value="unpaid" className="data-[state=active]:bg-white" data-testid="unpaid-tab">
+                Unpaid ({unpaidStudents.length})
+              </TabsTrigger>
+              <TabsTrigger value="paid" className="data-[state=active]:bg-white" data-testid="paid-tab">
+                Paid ({paidStudents.length})
+              </TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="unpaid" className="mt-4">
+              <Card className="border-slate-200">
+                {unpaidStudents.length === 0 ? (
+                  <CardContent className="p-8 text-center">
+                    <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
+                    <p className="text-slate-500">All fees collected for this filter!</p>
+                  </CardContent>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow className="bg-slate-50">
+                          <TableHead className="font-semibold">Student Name</TableHead>
+                          <TableHead className="font-semibold">Class</TableHead>
+                          <TableHead className="font-semibold">Amount</TableHead>
+                          <TableHead className="font-semibold text-right">Action</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {unpaidStudents.map((fee) => (
+                          <TableRow key={fee.id} className="table-row-hover">
+                            <TableCell className="font-medium text-slate-900">{fee.student_name}</TableCell>
+                            <TableCell>
+                              <Badge variant="secondary" className="bg-slate-100 text-slate-700">
+                                {fee.student_class}
+                              </Badge>
+                            </TableCell>
+                            <TableCell className="font-semibold">₹{fee.amount.toLocaleString()}</TableCell>
+                            <TableCell className="text-right">
+                              <Button
+                                size="sm"
+                                onClick={() => handleMarkPaid(fee)}
+                                className="bg-green-600 hover:bg-green-700 text-white btn-scale"
+                                data-testid={`mark-paid-btn-${fee.id}`}
+                              >
+                                <CheckCircle className="w-4 h-4 mr-1" />
+                                Mark Paid
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                )}
+              </Card>
+            </TabsContent>
+            
+            <TabsContent value="paid" className="mt-4">
+              <Card className="border-slate-200">
+                {paidStudents.length === 0 ? (
+                  <CardContent className="p-8 text-center">
+                    <p className="text-slate-500">No payments yet for this filter</p>
+                  </CardContent>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow className="bg-slate-50">
+                          <TableHead className="font-semibold">Student Name</TableHead>
+                          <TableHead className="font-semibold">Class</TableHead>
+                          <TableHead className="font-semibold">Amount</TableHead>
+                          <TableHead className="font-semibold">Paid On</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {paidStudents.map((fee) => (
+                          <TableRow key={fee.id} className="table-row-hover">
+                            <TableCell className="font-medium text-slate-900">{fee.student_name}</TableCell>
+                            <TableCell>
+                              <Badge variant="secondary" className="bg-slate-100 text-slate-700">
+                                {fee.student_class}
+                              </Badge>
+                            </TableCell>
+                            <TableCell className="font-semibold text-green-600">₹{fee.amount.toLocaleString()}</TableCell>
+                            <TableCell className="text-slate-600">
+                              {fee.paid_at ? format(new Date(fee.paid_at), 'dd MMM yyyy, hh:mm a') : '-'}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                )}
+              </Card>
+            </TabsContent>
+          </Tabs>
+        )}
+
+        {/* Confirm Mark Paid Dialog */}
+        <AlertDialog open={confirmDialogOpen} onOpenChange={setConfirmDialogOpen}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Confirm Payment</AlertDialogTitle>
+              <AlertDialogDescription>
+                Are you sure you want to mark this fee as <strong>PAID</strong> for{' '}
+                <strong>{selectedFee?.student_name}</strong>?
+                <br /><br />
+                <span className="text-amber-600 font-medium">
+                  ⚠️ This action cannot be undone. Once marked as paid, the status cannot be changed.
+                </span>
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel data-testid="cancel-mark-paid-btn">Cancel</AlertDialogCancel>
+              <AlertDialogAction 
+                onClick={confirmMarkPaid}
+                className="bg-green-600 hover:bg-green-700"
+                disabled={markingPaid}
+                data-testid="confirm-mark-paid-btn"
+              >
+                {markingPaid ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Processing...
+                  </>
+                ) : (
+                  <>
+                    <CheckCircle className="w-4 h-4 mr-2" />
+                    Confirm Payment
+                  </>
+                )}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </div>
+    );
+  }
+
+  // Main List View
   return (
     <div className="space-y-6 fade-in" data-testid="fees-page">
       {/* Header */}
@@ -161,7 +396,7 @@ export const FeesPage = () => {
         )}
       </div>
 
-      {/* Fee Bills List */}
+      {/* Active Fee Bills */}
       {feeBills.length === 0 ? (
         <Card className="border-slate-200">
           <CardContent className="p-12 text-center">
@@ -180,38 +415,61 @@ export const FeesPage = () => {
           </CardContent>
         </Card>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {feeBills.map((bill) => (
-            <Card 
-              key={bill.id} 
-              className="border-slate-200 card-hover cursor-pointer"
-              onClick={() => handleViewBill(bill)}
-              data-testid={`fee-bill-card-${bill.id}`}
-            >
-              <CardContent className="p-5">
-                <div className="flex items-start justify-between mb-3">
-                  <div className="p-2 bg-blue-100 rounded-lg">
-                    <IndianRupee className="w-5 h-5 text-blue-600" />
-                  </div>
-                  <Badge variant="secondary" className="bg-slate-100 text-slate-700">
-                    {bill.target_class || 'All Classes'}
-                  </Badge>
-                </div>
-                <h3 className="font-semibold text-slate-900 mb-1">{bill.name}</h3>
-                <p className="text-2xl font-bold text-blue-600 mb-2">₹{bill.amount.toLocaleString()}</p>
-                {bill.description && (
-                  <p className="text-sm text-slate-500 mb-3 line-clamp-2">{bill.description}</p>
-                )}
-                <div className="flex items-center justify-between text-sm text-slate-500">
-                  <span>{format(new Date(bill.created_at), 'dd MMM yyyy')}</span>
-                  <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-700 p-0">
-                    <Eye className="w-4 h-4 mr-1" />
-                    View
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+        <div className="space-y-4">
+          <h2 className="text-lg font-semibold text-slate-900">Active Fee Bills</h2>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-slate-50">
+                  <TableHead className="font-semibold">Fee Type</TableHead>
+                  <TableHead className="font-semibold">Amount</TableHead>
+                  <TableHead className="font-semibold">Target Class</TableHead>
+                  <TableHead className="font-semibold">Created On</TableHead>
+                  <TableHead className="font-semibold">Due Date</TableHead>
+                  <TableHead className="font-semibold text-right">Action</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {feeBills.map((bill) => (
+                  <TableRow 
+                    key={bill.id} 
+                    className="table-row-hover cursor-pointer"
+                    onClick={() => handleViewBill(bill)}
+                    data-testid={`fee-bill-row-${bill.id}`}
+                  >
+                    <TableCell className="font-medium text-slate-900">{bill.name}</TableCell>
+                    <TableCell className="font-semibold text-blue-600">₹{bill.amount.toLocaleString()}</TableCell>
+                    <TableCell>
+                      <Badge variant="secondary" className="bg-slate-100 text-slate-700">
+                        {bill.target_class || 'All Classes'}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-slate-600">
+                      {format(new Date(bill.created_at), 'dd MMM yyyy')}
+                    </TableCell>
+                    <TableCell className="text-slate-600">
+                      {bill.due_date ? format(new Date(bill.due_date), 'dd MMM yyyy') : '-'}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleViewBill(bill);
+                        }}
+                        className="border-slate-200"
+                        data-testid={`view-bill-btn-${bill.id}`}
+                      >
+                        <Users className="w-4 h-4 mr-1" />
+                        View Students
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </div>
       )}
 
@@ -308,143 +566,6 @@ export const FeesPage = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-
-      {/* View Bill Dialog */}
-      <Dialog open={viewDialogOpen} onOpenChange={setViewDialogOpen}>
-        <DialogContent className="sm:max-w-3xl max-h-[80vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="text-slate-900">{selectedBill?.name}</DialogTitle>
-            <DialogDescription>
-              ₹{selectedBill?.amount.toLocaleString()} • {selectedBill?.target_class || 'All Classes'}
-            </DialogDescription>
-          </DialogHeader>
-          
-          {loadingStudents ? (
-            <div className="flex items-center justify-center h-48">
-              <div className="spinner" />
-            </div>
-          ) : (
-            <Tabs defaultValue="unpaid" className="w-full">
-              <TabsList className="bg-slate-100">
-                <TabsTrigger value="unpaid" className="data-[state=active]:bg-white">
-                  Unpaid ({billStudents.filter(s => s.status === 'unpaid').length})
-                </TabsTrigger>
-                <TabsTrigger value="paid" className="data-[state=active]:bg-white">
-                  Paid ({billStudents.filter(s => s.status === 'paid').length})
-                </TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="unpaid" className="mt-4">
-                {billStudents.filter(s => s.status === 'unpaid').length === 0 ? (
-                  <p className="text-center text-slate-500 py-8">All fees have been paid!</p>
-                ) : (
-                  <div className="overflow-x-auto">
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>Student</TableHead>
-                          <TableHead>Class</TableHead>
-                          <TableHead>Amount</TableHead>
-                          <TableHead className="text-right">Action</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {billStudents.filter(s => s.status === 'unpaid').map((fee) => (
-                          <TableRow key={fee.id}>
-                            <TableCell className="font-medium">{fee.student_name}</TableCell>
-                            <TableCell>{fee.student_class}</TableCell>
-                            <TableCell>₹{fee.amount.toLocaleString()}</TableCell>
-                            <TableCell className="text-right">
-                              <Button
-                                size="sm"
-                                onClick={() => handleMarkPaid(fee)}
-                                className="bg-green-600 hover:bg-green-700 text-white"
-                                data-testid={`mark-paid-btn-${fee.id}`}
-                              >
-                                <CheckCircle className="w-4 h-4 mr-1" />
-                                Mark Paid
-                              </Button>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </div>
-                )}
-              </TabsContent>
-              
-              <TabsContent value="paid" className="mt-4">
-                {billStudents.filter(s => s.status === 'paid').length === 0 ? (
-                  <p className="text-center text-slate-500 py-8">No payments yet</p>
-                ) : (
-                  <div className="overflow-x-auto">
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>Student</TableHead>
-                          <TableHead>Class</TableHead>
-                          <TableHead>Amount</TableHead>
-                          <TableHead>Paid On</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {billStudents.filter(s => s.status === 'paid').map((fee) => (
-                          <TableRow key={fee.id}>
-                            <TableCell className="font-medium">{fee.student_name}</TableCell>
-                            <TableCell>{fee.student_class}</TableCell>
-                            <TableCell>₹{fee.amount.toLocaleString()}</TableCell>
-                            <TableCell>
-                              {fee.paid_at ? format(new Date(fee.paid_at), 'dd MMM yyyy') : '-'}
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </div>
-                )}
-              </TabsContent>
-            </Tabs>
-          )}
-        </DialogContent>
-      </Dialog>
-
-      {/* Confirm Mark Paid Dialog */}
-      <AlertDialog open={confirmDialogOpen} onOpenChange={setConfirmDialogOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Confirm Payment</AlertDialogTitle>
-            <AlertDialogDescription>
-              Are you sure you want to mark this fee as <strong>PAID</strong> for{' '}
-              <strong>{selectedFee?.student_name}</strong>?
-              <br /><br />
-              <span className="text-amber-600 font-medium">
-                ⚠️ This action cannot be undone. Once marked as paid, the status cannot be changed.
-              </span>
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel data-testid="cancel-mark-paid-btn">Cancel</AlertDialogCancel>
-            <AlertDialogAction 
-              onClick={confirmMarkPaid}
-              className="bg-green-600 hover:bg-green-700"
-              disabled={markingPaid}
-              data-testid="confirm-mark-paid-btn"
-            >
-              {markingPaid ? (
-                <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Processing...
-                </>
-              ) : (
-                <>
-                  <CheckCircle className="w-4 h-4 mr-2" />
-                  Confirm Payment
-                </>
-              )}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </div>
   );
 };
