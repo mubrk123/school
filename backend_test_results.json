@@ -1,0 +1,55 @@
+{
+  "timestamp": "2026-02-11T09:34:19.685031",
+  "total_tests": 3,
+  "passed_tests": 2,
+  "failed_tests": 1,
+  "success_rate": 66.66666666666666,
+  "test_details": [
+    {
+      "test": "API Root Health Check",
+      "success": true,
+      "details": "",
+      "response_data": {
+        "message": "School Administration API",
+        "status": "healthy"
+      }
+    },
+    {
+      "test": "API Health Endpoint",
+      "success": true,
+      "details": "",
+      "response_data": {
+        "status": "ok"
+      }
+    },
+    {
+      "test": "School Registration",
+      "success": false,
+      "details": "Status: 422, Data: {'detail': [{'type': 'missing', 'loc': ['body', 'school_data'], 'msg': 'Field required', 'input': None, 'url': 'https://errors.pydantic.dev/2.12/v/missing'}, {'type': 'missing', 'loc': ['body', 'user_data'], 'msg': 'Field required', 'input': None, 'url': 'https://errors.pydantic.dev/2.12/v/missing'}]}",
+      "response_data": {
+        "detail": [
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "school_data"
+            ],
+            "msg": "Field required",
+            "input": null,
+            "url": "https://errors.pydantic.dev/2.12/v/missing"
+          },
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "user_data"
+            ],
+            "msg": "Field required",
+            "input": null,
+            "url": "https://errors.pydantic.dev/2.12/v/missing"
+          }
+        ]
+      }
+    }
+  ]
+}
