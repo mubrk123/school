@@ -57,6 +57,17 @@ export const createUser = (data) => api.post('/users', data);
 export const getUsers = () => api.get('/users');
 export const deleteUser = (id) => api.delete(`/users/${id}`);
 
+// Teachers
+export const createTeacher = (data) => api.post('/teachers', data);
+export const getTeachers = () => api.get('/teachers');
+export const getTeacher = (id) => api.get(`/teachers/${id}`);
+export const updateTeacher = (id, data) => api.put(`/teachers/${id}`, data);
+
+// Teacher Salaries
+export const createTeacherSalary = (data) => api.post('/teacher-salaries', data);
+export const getAllSalaries = () => api.get('/teacher-salaries');
+export const getTeacherSalaries = (teacherId) => api.get(`/teachers/${teacherId}/salaries`);
+
 // Students
 export const createStudent = (data) => api.post('/students', data);
 export const getStudents = (params) => api.get('/students', { params });
