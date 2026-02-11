@@ -72,6 +72,9 @@ class UserCreate(BaseModel):
     password: str
     name: str
     role: str = "teacher"
+    phone: Optional[str] = None
+    address: Optional[str] = None
+    assigned_classes: Optional[List[str]] = None
 
 class UserLogin(BaseModel):
     email: EmailStr
@@ -83,7 +86,34 @@ class UserResponse(BaseModel):
     email: str
     name: str
     role: str
+    phone: Optional[str] = None
+    address: Optional[str] = None
+    assigned_classes: Optional[str] = None
     created_at: datetime
+    model_config = ConfigDict(from_attributes=True)
+
+class TeacherCreate(BaseModel):
+    email: EmailStr
+    password: str
+    name: str
+    phone: Optional[str] = None
+    address: Optional[str] = None
+    assigned_classes: List[str]
+
+class TeacherSalaryCreate(BaseModel):
+    teacher_id: str
+    amount: float
+    remark: Optional[str] = None
+
+class TeacherSalaryResponse(BaseModel):
+    id: str
+    teacher_id: str
+    amount: float
+    remark: Optional[str]
+    paid_by: Optional[str]
+    paid_at: datetime
+    created_at: datetime
+    teacher_name: Optional[str] = None
     model_config = ConfigDict(from_attributes=True)
 
 class TokenResponse(BaseModel):
