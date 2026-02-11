@@ -258,19 +258,29 @@ def require_principal(user: User = Depends(get_current_user)) -> User:
 # ========================
 
 @api_router.post("/auth/register-school", response_model=TokenResponse)
-async def register_school(school_data: SchoolCreate, user_data: UserCreate, db: AsyncSession = Depends(get_db)):
+async def register_school(data: SchoolRegisterRequest, db: AsyncSession = Depends(get_db)):
     """Register a new school with a principal account"""
+    # Check if email already exists
+    result = await db.execute(select(User).where(User.email == data.user_email))
+    if result.scalar_one_or_none():
+        raise HTTPException(status_code=400, detail="Email already registered")
+    
     # Create school
-    school = School(**school_data.model_dump())
+    school = School(
+        name=data.school_name,
+        address=data.school_address,
+        phone=data.school_phone,
+        email=data.school_email
+    )
     db.add(school)
     await db.flush()
     
     # Create principal user
     user = User(
         school_id=school.id,
-        email=user_data.email,
-        password_hash=hash_password(user_data.password),
-        name=user_data.name,
+        email=data.user_email,
+        password_hash=hash_password(data.user_password),
+        name=data.user_name,
         role="principal"
     )
     db.add(user)
