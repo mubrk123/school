@@ -10,7 +10,7 @@ import {
   CreditCard, 
   CheckSquare, 
   Bell, 
-  Settings,
+  UserCog,
   LogOut,
   Menu,
   GraduationCap,
@@ -46,6 +46,12 @@ export const Layout = ({ children }) => {
       name: 'Admission', 
       href: '/students/new', 
       icon: UserPlus,
+      access: 'principal'
+    },
+    { 
+      name: 'Teachers', 
+      href: '/teachers', 
+      icon: UserCog,
       access: 'principal'
     },
     { 
