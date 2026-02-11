@@ -136,3 +136,16 @@ class Notification(Base):
     created_at = Column(DateTime(timezone=True), default=utc_now)
     
     school = relationship('School', back_populates='notifications')
+
+class TeacherSalary(Base):
+    __tablename__ = 'teacher_salaries'
+    
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    teacher_id = Column(String(36), ForeignKey('users.id', ondelete='CASCADE'), nullable=False, index=True)
+    amount = Column(Float, nullable=False)
+    remark = Column(Text)
+    paid_by = Column(String(36))  # principal user_id
+    paid_at = Column(DateTime(timezone=True), default=utc_now)
+    created_at = Column(DateTime(timezone=True), default=utc_now)
+    
+    teacher = relationship('User', back_populates='salary_payments', foreign_keys=[teacher_id])
