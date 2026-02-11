@@ -328,30 +328,53 @@ class SchoolAdminAPITester:
             self.log_result("Get Notification Contacts", success, 
                            f"Status: {status_code}" if not success else "", data)
 
-    def test_user_management(self):
-        """Test user management (Principal only)"""
-        print("\n🔍 Testing User Management...")
+    def test_teacher_management(self):
+        """Test teacher management with class assignment"""
+        print("\n🔍 Testing Teacher Management...")
         
-        # Create teacher user
+        # Create teacher with class assignment
         teacher_data = {
             "email": f"teacher{datetime.now().strftime('%H%M%S')}@testschool.com",
             "password": "TeacherPass123!",
             "name": "Test Teacher",
-            "role": "teacher"
+            "phone": "+91-9876543210",
+            "address": "123 Teacher Street",
+            "assigned_classes": ["Class 5", "Class 6"]
         }
         
-        status_code, data = self.make_request('POST', '/users', teacher_data)
+        status_code, data = self.make_request('POST', '/teachers', teacher_data)
         success = status_code == 200 and 'id' in data
         teacher_id = data.get('id') if success else None
         
-        self.log_result("Create Teacher User", success, 
+        self.log_result("Create Teacher with Classes", success, 
                        f"Status: {status_code}" if not success else "", data)
         
-        # Get users
-        status_code, data = self.make_request('GET', '/users')
+        # Get teachers
+        status_code, data = self.make_request('GET', '/teachers')
         success = status_code == 200 and isinstance(data, list)
-        self.log_result("Get Users", success, 
+        self.log_result("Get Teachers", success, 
                        f"Status: {status_code}" if not success else "", data)
+        
+        # Test teacher salary payment
+        if teacher_id:
+            salary_data = {
+                "teacher_id": teacher_id,
+                "amount": 50000.0,
+                "remark": "January 2025 Salary"
+            }
+            
+            status_code, data = self.make_request('POST', '/teacher-salaries', salary_data)
+            success = status_code == 200 and 'id' in data
+            self.log_result("Record Teacher Salary", success, 
+                           f"Status: {status_code}" if not success else "", data)
+            
+            # Get teacher salary history
+            status_code, data = self.make_request('GET', f'/teachers/{teacher_id}/salaries')
+            success = status_code == 200 and isinstance(data, list)
+            self.log_result("Get Teacher Salary History", success, 
+                           f"Status: {status_code}" if not success else "", data)
+        
+        return teacher_id
 
     def cleanup_test_data(self):
         """Clean up test data"""
