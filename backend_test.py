@@ -89,25 +89,22 @@ class SchoolAdminAPITester:
         """Test school registration"""
         print("\n🔍 Testing School Registration...")
         
-        school_data = {
-            "name": self.test_school_name,
-            "address": "123 Test Street, Test City",
-            "phone": "+91-9876543210",
-            "email": "contact@testschool.com"
+        registration_data = {
+            "school_data": {
+                "name": self.test_school_name,
+                "address": "123 Test Street, Test City",
+                "phone": "+91-9876543210",
+                "email": "contact@testschool.com"
+            },
+            "user_data": {
+                "name": "Test Principal",
+                "email": self.test_user_email,
+                "password": self.test_user_password,
+                "role": "principal"
+            }
         }
         
-        user_data = {
-            "name": "Test Principal",
-            "email": self.test_user_email,
-            "password": self.test_user_password,
-            "role": "principal"
-        }
-        
-        # Combine data for registration
-        registration_data = {**user_data}
-        
-        status_code, data = self.make_request('POST', '/auth/register-school', 
-                                            registration_data, params=school_data)
+        status_code, data = self.make_request('POST', '/auth/register-school', registration_data)
         
         success = status_code == 200 and 'access_token' in data
         if success:
