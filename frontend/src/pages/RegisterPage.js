@@ -49,16 +49,17 @@ export const RegisterPage = () => {
     
     try {
       const response = await api.post('/auth/register-school', {
-        email: userData.email,
-        password: userData.password,
-        name: userData.name,
-        role: 'principal'
-      }, {
-        params: {
+        school_data: {
           name: schoolData.name,
           address: schoolData.address,
           phone: schoolData.phone,
           email: schoolData.email
+        },
+        user_data: {
+          email: userData.email,
+          password: userData.password,
+          name: userData.name,
+          role: 'principal'
         }
       });
       
