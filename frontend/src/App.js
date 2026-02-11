@@ -132,6 +132,14 @@ function AppRoutes() {
           </ProtectedRoute>
         } 
       />
+      <Route 
+        path="/teachers" 
+        element={
+          <ProtectedRoute requirePrincipal>
+            <TeachersPage />
+          </ProtectedRoute>
+        } 
+      />
 
       {/* Fallback */}
       <Route path="*" element={<Navigate to="/" replace />} />
