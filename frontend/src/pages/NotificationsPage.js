@@ -208,14 +208,14 @@ export const NotificationsPage = () => {
             <div className="space-y-2">
               <Label className="text-slate-700">Target Class</Label>
               <Select 
-                value={newNotification.target_class} 
-                onValueChange={(value) => setNewNotification({ ...newNotification, target_class: value })}
+                value={newNotification.target_class || 'all'} 
+                onValueChange={(value) => setNewNotification({ ...newNotification, target_class: value === 'all' ? '' : value })}
               >
                 <SelectTrigger className="bg-white border-slate-200" data-testid="notification-class-select">
                   <SelectValue placeholder="All Classes" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Classes</SelectItem>
+                  <SelectItem value="all">All Classes</SelectItem>
                   {classes.map((cls) => (
                     <SelectItem key={cls} value={cls}>{cls}</SelectItem>
                   ))}
