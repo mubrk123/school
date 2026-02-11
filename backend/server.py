@@ -16,7 +16,7 @@ import jwt
 from passlib.context import CryptContext
 
 from database import get_db, engine, Base
-from models import School, User, Student, FeeBill, StudentFee, Attendance, Notification
+from models import School, User, Student, FeeBill, StudentFee, Attendance, Notification, TeacherSalary
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
